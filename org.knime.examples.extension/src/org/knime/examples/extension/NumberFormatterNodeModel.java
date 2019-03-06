@@ -68,6 +68,9 @@ public class NumberFormatterNodeModel extends NodeModel {
 	 * {@link #loadValidatedSettingsFrom(NodeSettingsRO)},
 	 * {@link #saveSettingsTo(NodeSettingsWO)}). Here, we use a SettingsModelString
 	 * as the number format is a String. There are models for all common data types.
+	 * Also have a look at the comments in the constructor of the
+	 * {@link NumberFormatterNodeDialog} as the settings models are also used to
+	 * create simple dialogs.
 	 */
 	private final SettingsModelString m_numberFormatSettings = createNumberFormatSettingsModel();
 
@@ -295,9 +298,9 @@ public class NumberFormatterNodeModel extends NodeModel {
 		/*
 		 * Save user settings to the config object. SettingsModels already know how to
 		 * save them self to a config object by calling the below method. In general,
-		 * the NodeSettings object is just a key-value store and has methods to write all
-		 * common data types. Hence, you can easily write your settings manually. See the
-		 * methods of the NodeSettingsWO.
+		 * the NodeSettings object is just a key-value store and has methods to write
+		 * all common data types. Hence, you can easily write your settings manually.
+		 * See the methods of the NodeSettingsWO.
 		 */
 		m_numberFormatSettings.saveSettingsTo(settings);
 	}
@@ -335,12 +338,11 @@ public class NumberFormatterNodeModel extends NodeModel {
 	protected void loadInternals(File nodeInternDir, ExecutionMonitor exec)
 			throws IOException, CanceledExecutionException {
 		/*
-		 * Advance method, usually can be left empty.
-		 * Load internal data. Everything handed to output ports is loaded automatically
-		 * (data returned by the execute method, models loaded in loadModelContent, and
-		 * user settings set through loadSettingsFrom - is all taken care of). Load here
-		 * only the other internals that need to be restored (e.g. data used by the
-		 * views).
+		 * Advance method, usually can be left empty. Load internal data. Everything
+		 * handed to output ports is loaded automatically (data returned by the execute
+		 * method, models loaded in loadModelContent, and user settings set through
+		 * loadSettingsFrom - is all taken care of). Load here only the other internals
+		 * that need to be restored (e.g. data used by the views).
 		 */
 	}
 
@@ -348,12 +350,11 @@ public class NumberFormatterNodeModel extends NodeModel {
 	protected void saveInternals(File nodeInternDir, ExecutionMonitor exec)
 			throws IOException, CanceledExecutionException {
 		/*
-		 * Advance method, usually can be left empty.
-		 * Save internal models. Everything written to output ports is saved
-		 * automatically (data returned by the execute method, models saved in the
-		 * saveModelContent, and user settings saved through saveSettingsTo - is all
-		 * taken care of). Save here only the other internals that need to be preserved
-		 * (e.g. data used by the views).
+		 * Advance method, usually can be left empty. Save internal models. Everything
+		 * written to output ports is saved automatically (data returned by the execute
+		 * method, models saved in the saveModelContent, and user settings saved through
+		 * saveSettingsTo - is all taken care of). Save here only the other internals
+		 * that need to be preserved (e.g. data used by the views).
 		 */
 	}
 

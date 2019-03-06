@@ -1,6 +1,7 @@
 package org.knime.examples.extension;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.defaultnodesettings.DialogComponentNumber;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
@@ -26,23 +27,36 @@ public class NumberFormatterNodeDialog extends DefaultNodeSettingsPane {
 		super();
 		/*
 		 * The DefaultNodeSettingsPane provides methods to add simple standard
-		 * components to the dialog pane. They are connected to the node model via
-		 * settings model objects that can easily load and save their settings to the
-		 * node settings. Here, the loading/saving in the dialog is already taken care
-		 * of by the DefaultNodeSettingsPane. It is important to use the same key for
-		 * the settings model here as used in the node model implementation (it does not
-		 * need to be the same object). One best practice is to use package private
-		 * static methods to create the settings model as we did in the node model
-		 * implementation (see createNumberFormatSettingsModel()).
+		 * components to the dialog pane via the addDialogComponent(...) method. This
+		 * method expects a new DialogComponet object that should be added to the dialog
+		 * pane. There are many already predefined components for the most commonly used
+		 * configuration needs like a text box (DialogComponentString) to enter some
+		 * String or a number spinner (DialogComponentNumber) to enter some number in a
+		 * specific range and step size.
+		 * 
+		 * The dialog components are connected to the node model via settings model
+		 * objects that can easily load and save their settings to the node settings.
+		 * Depending on the type of input the dialog component should receive, the
+		 * constructor of the component requires a suitable settings model object. E.g.
+		 * the DialogComponentString requires a SettingsModelString. Additionally,
+		 * dialog components sometimes allow to further configure the behavior of the
+		 * component in the constructor. E.g. to disallow empty inputs (like below).
+		 * Here, the loading/saving in the dialog is already taken care of by the
+		 * DefaultNodeSettingsPane. It is important to use the same key for the settings
+		 * model here as used in the node model implementation (it does not need to be
+		 * the same object). One best practice is to use package private static methods
+		 * to create the settings model as we did in the node model implementation (see
+		 * createNumberFormatSettingsModel() in NumberFormatterNodeModel class).
 		 * 
 		 * Here we create a simple String DialogComponent that will display a label
-		 * String and a text box in which the use can enter a value. The
+		 * String besides a text box in which the use can enter a value. The
 		 * DialogComponentString has additional options to disallow empty inputs, hence
 		 * we do not need to worry about that in the model implementation anymore.
 		 * 
-		 * There are default dialog components for all types of settings models.
 		 */
+		// First, create a new settings model using the create method from the node model.
 		SettingsModelString stringSettings = NumberFormatterNodeModel.createNumberFormatSettingsModel();
+		// Add a new String component to the dialog.
 		addDialogComponent(new DialogComponentString(stringSettings, "Number Format", true, 10));
 	}
 }
