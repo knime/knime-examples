@@ -6,7 +6,7 @@ import org.knime.core.node.NodeView;
 
 /**
  * This is an example implementation of the node factory of the
- * "NumberFormaterNode" node.
+ * "NumberFormatterNode" node.
  * 
  * The node factory creates all classes the make up a node. Furthermore, it specifies if the
  * node has views or a dialog (both are optional). 

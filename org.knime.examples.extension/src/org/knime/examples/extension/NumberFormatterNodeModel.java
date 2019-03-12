@@ -11,6 +11,7 @@ import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
 import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.DoubleValue;
 import org.knime.core.data.container.CloseableRowIterator;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.DoubleCell;
@@ -29,7 +30,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * This is an example implementation of the node model of the
- * "NumberFormaterNode".
+ * "NumberFormatterNode".
  * 
  * This example node performs simple number formatting
  * ({@link String#format(String, Object...)}) using a user defined format string
@@ -65,12 +66,14 @@ public class NumberFormatterNodeModel extends NodeModel {
 	 * value entered by the user in the dialog and will update once the user changes
 	 * the value. Furthermore, it provides methods to easily load and save the value
 	 * to and from the shared settings (see:
+	 * <br>
 	 * {@link #loadValidatedSettingsFrom(NodeSettingsRO)},
-	 * {@link #saveSettingsTo(NodeSettingsWO)}). Here, we use a SettingsModelString
-	 * as the number format is a String. There are models for all common data types.
-	 * Also have a look at the comments in the constructor of the
-	 * {@link NumberFormatterNodeDialog} as the settings models are also used to
-	 * create simple dialogs.
+	 * {@link #saveSettingsTo(NodeSettingsWO)}). 
+	 * <br>
+	 * Here, we use a SettingsModelString as the number format is a String. 
+	 * There are models for all common data types. Also have a look at the comments 
+	 * in the constructor of the {@link NumberFormatterNodeDialog} as the settings 
+	 * models are also used to create simple dialogs.
 	 */
 	private final SettingsModelString m_numberFormatSettings = createNumberFormatSettingsModel();
 
@@ -87,9 +90,8 @@ public class NumberFormatterNodeModel extends NodeModel {
 
 	/**
 	 * A convenience method to create a new settings model used for the number
-	 * format String. This method will be also used in the
-	 * {@link NumberFormatterNodeDialog}. The settings model will sync via the above
-	 * defined key.
+	 * format String. This method will also be used in the {@link NumberFormatterNodeDialog}. 
+	 * The settings model will sync via the above defined key.
 	 * 
 	 * @return a new SettingsModelString with the key for the number format String
 	 */
@@ -131,7 +133,7 @@ public class NumberFormatterNodeModel extends NodeModel {
 		DataTableSpec outputSpec = createOutputSpec(inputTable.getDataTableSpec());
 
 		/*
-		 * The execution context will provide us with storage capacity, in this case a
+		 * The execution context provides storage capacity, in this case a
 		 * data container to which we will add rows sequentially. Note, this container
 		 * can handle arbitrary big data tables, it will buffer to disc if necessary.
 		 * The execution context is provided as an argument to the execute method by the
@@ -158,23 +160,22 @@ public class NumberFormatterNodeModel extends NodeModel {
 			int numberOfCells = currentRow.getNumCells();
 			/*
 			 * A list to collect the cells to output for the current row. The type and
-			 * amount of cells must match the DataTableSpec we used to create the
-			 * DataContainer where we want to add new rows to. Hence, the spec we created in
-			 * the "createOutputSpec(...)" method.
+			 * amount of cells must match the DataTableSpec we used when creating the
+			 * DataContainer. 
 			 */
 			List<DataCell> cells = new ArrayList<>();
 			// Iterate over the cells of the current row.
 			for (int i = 0; i < numberOfCells; i++) {
 				DataCell cell = currentRow.getCell(i);
 				/*
-				 * We just care for double cells. Hence, we check if the current cell equals
+				 * We only care about double cells. Hence, we check if the current cell equals
 				 * DoubleCell.class. All other cells in the input table will be ignored.
 				 */
 				if (cell.getType().getCellClass().equals((DoubleCell.class))) {
 					// Cast the cell as we know is must be a DoubleCell.
 					DoubleCell doubleCell = (DoubleCell) cell;
 					/*
-					 * Format the double value using the used defined number format. The format is
+					 * Format the double value using the user defined number format. The format is
 					 * retrieved from the settings model member that we created above.
 					 */
 					String format = m_numberFormatSettings.getStringValue();
@@ -205,7 +206,7 @@ public class NumberFormatterNodeModel extends NodeModel {
 			 * over the progress bar of the node). This is especially useful to inform the
 			 * user about the execution status for long running nodes.
 			 */
-			exec.setProgress(currentRowCounter / (double) inputTable.size(), "Formating row " + currentRowCounter);
+			exec.setProgress(currentRowCounter / (double) inputTable.size(), "Formatting row " + currentRowCounter);
 		}
 
 		/*
@@ -296,8 +297,8 @@ public class NumberFormatterNodeModel extends NodeModel {
 	@Override
 	protected void saveSettingsTo(final NodeSettingsWO settings) {
 		/*
-		 * Save user settings to the config object. SettingsModels already know how to
-		 * save them self to a config object by calling the below method. In general,
+		 * Save user settings to the NodeSettings object. SettingsModels already know how to
+		 * save them self to a NodeSettings object by calling the below method. In general,
 		 * the NodeSettings object is just a key-value store and has methods to write
 		 * all common data types. Hence, you can easily write your settings manually.
 		 * See the methods of the NodeSettingsWO.
@@ -311,7 +312,7 @@ public class NumberFormatterNodeModel extends NodeModel {
 	@Override
 	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
 		/*
-		 * Load (valid) settings from the config object. It can be safely assumed that
+		 * Load (valid) settings from the NodeSettings object. It can be safely assumed that
 		 * the settings are validated by the method below.
 		 * 
 		 * The SettingsModel will handle the loading. After this call, the current value
@@ -338,10 +339,10 @@ public class NumberFormatterNodeModel extends NodeModel {
 	protected void loadInternals(File nodeInternDir, ExecutionMonitor exec)
 			throws IOException, CanceledExecutionException {
 		/*
-		 * Advance method, usually can be left empty. Load internal data. Everything
-		 * handed to output ports is loaded automatically (data returned by the execute
+		 * Advanced method, usually left empty. Everything that is
+		 * handed to the output ports is loaded automatically (data returned by the execute
 		 * method, models loaded in loadModelContent, and user settings set through
-		 * loadSettingsFrom - is all taken care of). Load here only the other internals
+		 * loadSettingsFrom - is all taken care of). Only load the internals
 		 * that need to be restored (e.g. data used by the views).
 		 */
 	}
@@ -350,10 +351,10 @@ public class NumberFormatterNodeModel extends NodeModel {
 	protected void saveInternals(File nodeInternDir, ExecutionMonitor exec)
 			throws IOException, CanceledExecutionException {
 		/*
-		 * Advance method, usually can be left empty. Save internal models. Everything
-		 * written to output ports is saved automatically (data returned by the execute
+		 * Advanced method, usually left empty. Everything
+		 * written to the output ports is saved automatically (data returned by the execute
 		 * method, models saved in the saveModelContent, and user settings saved through
-		 * saveSettingsTo - is all taken care of). Save here only the other internals
+		 * saveSettingsTo - is all taken care of). Save only the internals
 		 * that need to be preserved (e.g. data used by the views).
 		 */
 	}
@@ -361,8 +362,8 @@ public class NumberFormatterNodeModel extends NodeModel {
 	@Override
 	protected void reset() {
 		/*
-		 * Code executed on a reset of the node. Models build during execute are cleared
-		 * here. Also data handled in loadInternals/saveInternals will be erased here.
+		 * Code executed on a reset of the node. Models built during execute are cleared
+		 * and the data handled in loadInternals/saveInternals will be erased.
 		 */
 	}
 }

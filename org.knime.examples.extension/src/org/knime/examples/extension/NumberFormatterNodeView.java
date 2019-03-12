@@ -4,7 +4,7 @@ import org.knime.core.node.NodeView;
 
 /**
  * This is an example implementation of the node view of the
- * "NumberFormaterNode"node.
+ * "NumberFormatterNode"node.
  * 
  * As this example node does not have a view, this is just an empty stub of the 
  * NodeView class which not providing a real view pane.
@@ -33,7 +33,7 @@ public class NumberFormatterNodeView extends NodeView<NumberFormatterNodeModel> 
 		assert nodeModel != null;
 		/*
 		 * Be aware of a possibly not executed nodeModel! The data you retrieve from
-		 * your nodemodel could be null, emtpy, or invalid in any kind.
+		 * your node model could be null, empty, or invalid in any kind.
 		 */
 	}
 

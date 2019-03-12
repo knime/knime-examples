@@ -1,13 +1,12 @@
 package org.knime.examples.extension;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentNumber;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * This is an example implementation of the node dialog of the
- * "NumberFormaterNode"node.
+ * "NumberFormatterNode"node.
  *
  * This node dialog derives from {@link DefaultNodeSettingsPane} which allows
  * creation of a simple dialog with standard components. If you need a more
@@ -20,7 +19,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 public class NumberFormatterNodeDialog extends DefaultNodeSettingsPane {
 
 	/**
-	 * New dialog pane for configuring NumberFormaterNode. The dialog created here
+	 * New dialog pane for configuring NumberFormatterNode. The dialog created here
 	 * will show up when double clicking on a node in KNIME Analytics Platform.
 	 */
 	protected NumberFormatterNodeDialog() {
