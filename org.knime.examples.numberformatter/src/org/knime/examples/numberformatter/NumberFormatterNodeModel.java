@@ -1,4 +1,4 @@
-package org.knime.examples.extension;
+package org.knime.examples.numberformatter;
 
 import java.io.File;
 import java.io.IOException;

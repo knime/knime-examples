@@ -18,8 +18,8 @@
          point="org.knime.workbench.repository.nodes">
       <node
             category-path="/"
-            factory-class="org.knime.examples.extension.NumberFormatterNodeFactory"
-            id="org.knime.example.node.MyExampleNodeNodeFactory"/>
+            factory-class="org.knime.examples.numberformatter.NumberFormatterNodeFactory"
+            id="org.knime.examples.numberformatter.NumberFormatterNodeFactory"/>
    </extension>
    
 </plugin>

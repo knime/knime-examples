@@ -2,7 +2,7 @@
  * $Revision$ $Date$ $Author$
  *
  */
-package org.knime.examples.extension;
+package org.knime.examples.numberformatter;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;

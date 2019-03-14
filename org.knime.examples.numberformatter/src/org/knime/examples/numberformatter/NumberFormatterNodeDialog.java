@@ -1,4 +1,4 @@
-package org.knime.examples.extension;
+package org.knime.examples.numberformatter;
 
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
