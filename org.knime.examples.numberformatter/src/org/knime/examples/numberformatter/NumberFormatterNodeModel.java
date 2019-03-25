@@ -182,6 +182,17 @@ public class NumberFormatterNodeModel extends NodeModel {
 					// Create a new StringCell and add it to our cell list.
 					cells.add(new StringCell(formatedValue));
 				}
+				/*
+				 * In this example we do not check for missing cells. If there are missing cells
+				 * in a row, the node will throw an Exception because we try to create a row
+				 * with less cells than specified in the table specification we used to create
+				 * the data container above. Hence, for your node implementation keep in mind to
+				 * check for missing cells in the input table. Then create missing cells with an
+				 * appropriate message or throw an Exception with a nice error message in case
+				 * missing cells are not allowed at all. Here, this could be done in an 'else
+				 * if' clause checking 'cell.isMissing()'. Then, add a new MissingCell to the
+				 * list of cells.
+				 */
 			}
 			// Add the new row to the output data container
 			DataRow row = new DefaultRow(currentRow.getKey(), cells);
