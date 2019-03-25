@@ -6,7 +6,7 @@ import org.knime.core.node.defaultnodesettings.SettingsModelString;
 
 /**
  * This is an example implementation of the node dialog of the
- * "NumberFormatterNode"node.
+ * "NumberFormatterNode".
  *
  * This node dialog derives from {@link DefaultNodeSettingsPane} which allows
  * creation of a simple dialog with standard components. If you need a more

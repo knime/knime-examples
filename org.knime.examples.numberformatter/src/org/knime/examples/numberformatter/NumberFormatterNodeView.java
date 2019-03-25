@@ -4,7 +4,7 @@ import org.knime.core.node.NodeView;
 
 /**
  * This is an example implementation of the node view of the
- * "NumberFormatterNode"node.
+ * "NumberFormatterNode".
  * 
  * As this example node does not have a view, this is just an empty stub of the 
  * NodeView class which not providing a real view pane.
