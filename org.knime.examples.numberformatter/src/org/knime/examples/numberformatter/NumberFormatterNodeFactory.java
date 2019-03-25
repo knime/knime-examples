@@ -48,7 +48,7 @@ public class NumberFormatterNodeFactory extends NodeFactory<NumberFormatterNodeM
 	 */
 	@Override
 	public boolean hasDialog() {
-		// Indication of the node has a dialog or not.
+		// Indication whether the node has a dialog or not.
 		return true;
 	}
 
