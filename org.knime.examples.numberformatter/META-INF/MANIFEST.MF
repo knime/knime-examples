@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MyExampleNode-Node extension for KNIME Workbench
 Bundle-SymbolicName: org.knime.examples.numberformatter;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: myexamplenode.jar
 Bundle-Activator: org.knime.examples.numberformatter.NumberFormatterNodePlugin
 Bundle-Vendor: KNIME AG, Zurich, Switzerland
