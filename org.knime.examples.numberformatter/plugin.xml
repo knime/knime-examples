@@ -2,24 +2,21 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-   <!-- This is an example for providing an own category 
       <extension
          point="org.knime.workbench.repository.categories">
       <category
             description="Category containing my nodes"
-            icon="icons/default.png"
+            icon="src/org/knime/examples/numberformatter/default.png"
             level-id="myNodes"
             name="My nodes"
             path="/"/>
    </extension>
-   -->
    
    <extension
          point="org.knime.workbench.repository.nodes">
       <node
-            category-path="/"
-            factory-class="org.knime.examples.numberformatter.NumberFormatterNodeFactory"
-            id="org.knime.examples.numberformatter.NumberFormatterNodeFactory"/>
+            category-path="/myNodes"
+            factory-class="org.knime.examples.numberformatter.NumberFormatterNodeFactory"/>
    </extension>
    
 </plugin>

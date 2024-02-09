@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MyExampleNode-Node extension for KNIME Workbench
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-SymbolicName: org.knime.examples.numberformatter;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: myexamplenode.jar
