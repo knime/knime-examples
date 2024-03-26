@@ -3,9 +3,6 @@
    <feature id="org.knime.examples.feature" version="0.0.0">
        <category name="knime-examples" />
    </feature>
-   <feature id="org.knime.examples.feature.source" version="0.0.0">
-       <category name="knime-examples" />
-   </feature>
 
    <category-def name="knime-examples" label="Build artifacts from knime-examples">
        <description>Build artifacts from knime-examples</description>
