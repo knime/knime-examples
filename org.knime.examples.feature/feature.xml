@@ -728,10 +728,7 @@ propagated with or for interoperation with KNIME.
    </license>
 
    <plugin
-         id="org.knime.examples.numberformatter"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         id="org.knime.examples.unitconverter"
+         version="0.0.0"/>
 
 </feature>

@@ -21,7 +21,7 @@
 
 	<!-- List the modules of your project here -->
 	<modules>
-		<module>org.knime.examples.numberformatter</module>
+		<module>org.knime.examples.unitconverter</module>
 		<module>org.knime.examples.feature</module>
 		<module>org.knime.examples.update</module>
 	</modules>

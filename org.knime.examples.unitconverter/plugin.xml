@@ -6,7 +6,6 @@
          point="org.knime.workbench.repository.categories">
       <category
             description="Category containing my nodes"
-            icon="src/org/knime/examples/numberformatter/default.png"
             level-id="myNodes"
             name="My nodes"
             path="/"/>
@@ -16,7 +15,7 @@
          point="org.knime.workbench.repository.nodes">
       <node
             category-path="/myNodes"
-            factory-class="org.knime.examples.numberformatter.NumberFormatterNodeFactory"/>
+            factory-class="org.knime.examples.unitconverter.UnitConverterNodeFactory"/>
    </extension>
    
 </plugin>

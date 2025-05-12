@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Automatic-Module-Name: org.knime.examples.unitconverter
+Bundle-Name: Unit Converter Node for KNIME Analytics Platform
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-SymbolicName: org.knime.examples.unitconverter;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: KNIME AG, Zurich, Switzerland
+Bundle-ActivationPolicy: lazy
+Export-Package: org.knime.examples.unitconverter
+Require-Bundle: org.knime.core;bundle-version="[5.5.0,6.0.0)",
+ org.knime.base.views;bundle-version="[5.5.0,6.0.0)",
+ org.knime.core.ui;bundle-version="[5.5.0,6.0.0)"
+
