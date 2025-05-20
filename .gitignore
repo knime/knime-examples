@@ -2,3 +2,5 @@
 */target/
 */build/
 .polyglot*
+
+python/__pycache__

@@ -1,0 +1,10 @@
+group_id: org.knime.example
+name: unitconverter
+author: Carsten Haubold
+vendor: KNIME AG, Zurich, Switzerland
+version: 0.1.0
+env_yml_path: env.yml
+extension_module: unitconverter
+description: An example KNIME node written in Python
+long_description: An example KNIME node written in Python that allows to convert between units
+license_file: LICENSE.txt
