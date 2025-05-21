@@ -56,9 +56,14 @@ public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConvert
 
 	public static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
 			.name("Unit Converter") //
-			.icon(null) //
+			.icon("node-cog.png") //
 			.shortDescription("Convert units of measure") //
-			.fullDescription("") //
+			.fullDescription("""
+					Convert between common metric / imperial units.
+
+				    Extend the ParameterArray to support further conversions
+				    by simply adding new items in the dialog.
+				    """) //
 			.modelSettingsClass(UnitConverterNodeSettings.class) //
 			.addInputPort("Table with column(s) to convert", BufferedDataTable.TYPE, "") //
 			.addOutputPort("Table with converted columns", BufferedDataTable.TYPE, "")

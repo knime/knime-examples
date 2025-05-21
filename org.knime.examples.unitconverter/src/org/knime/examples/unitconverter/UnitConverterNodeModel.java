@@ -46,31 +46,64 @@
  */
 package org.knime.examples.unitconverter;
 
+import java.util.Arrays;
+
+import org.knime.core.data.DataCell;
+import org.knime.core.data.DataColumnSpec;
+import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.DataRow;
+import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.DoubleValue;
+import org.knime.core.data.container.ColumnRearranger;
+import org.knime.core.data.container.SingleCellFactory;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.port.PortObjectSpec;
+import org.knime.core.util.UniqueNameGenerator;
 import org.knime.core.webui.node.impl.WebUINodeConfiguration;
 import org.knime.core.webui.node.impl.WebUINodeModel;
+import org.knime.core.webui.node.impl.WebUISimpleStreamableFunctionNodeModel;
 
 /** Model for the "Unit Converter" node. */
 @SuppressWarnings("restriction")
-final class UnitConverterNodeModel extends WebUINodeModel<UnitConverterNodeSettings> {
+final class UnitConverterNodeModel extends WebUISimpleStreamableFunctionNodeModel<UnitConverterNodeSettings> {
 
 	UnitConverterNodeModel(WebUINodeConfiguration configuration) {
 		super(configuration, UnitConverterNodeSettings.class);
 	}
 
 	@Override
-	protected BufferedDataTable[] execute(BufferedDataTable[] inData, ExecutionContext exec,
-			UnitConverterNodeSettings modelSettings) throws Exception {
-		return inData;
-	}
-	
-	@Override
-	protected PortObjectSpec[] configure(PortObjectSpec[] inSpecs, UnitConverterNodeSettings modelSettings)
+	protected ColumnRearranger createColumnRearranger(DataTableSpec spec, UnitConverterNodeSettings modelSettings)
 			throws InvalidSettingsException {
-		return inSpecs;
+		final var rearranger = new ColumnRearranger(spec);
+		final var uniqueNameGenerator = new UniqueNameGenerator(spec);
+		Arrays.stream(modelSettings.m_conversions).forEach(
+				conversion -> conversion.m_outputColumnSettings.addToRearranger(rearranger, uniqueNameGenerator,
+						conversion.m_inputColumn, spec, (columnSpec, newName) -> new UnitConverterCellFactory(
+								spec.findColumnIndex(columnSpec.getName()), columnSpec, newName, conversion)));
+		return rearranger;
+	}
+
+	static final class UnitConverterCellFactory extends SingleCellFactory {
+		private final Conversion m_conversion;
+		private final int m_columnIndex;
+
+		UnitConverterCellFactory(final int columnIndex, final DataColumnSpec columnSpec, final String newName,
+				final Conversion conversion) {
+			super(new DataColumnSpecCreator(newName, conversion.m_stringOrNumber.getDataType()).createSpec());
+			m_conversion = conversion;
+			m_columnIndex = columnIndex;
+		}
+
+		@Override
+		public DataCell getCell(DataRow row) {
+			final var inputValue = ((DoubleValue) row.getCell(m_columnIndex)).getDoubleValue();
+			final var outputValue = m_conversion.m_type.convert(inputValue);
+			return m_conversion.m_stringOrNumber.createCell(outputValue, m_conversion.m_type.getOutputUnit());
+
+		}
+
 	}
 
 }

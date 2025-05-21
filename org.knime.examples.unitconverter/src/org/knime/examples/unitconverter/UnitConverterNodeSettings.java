@@ -47,6 +47,7 @@
 package org.knime.examples.unitconverter;
 
 import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
+import org.knime.core.webui.node.dialog.defaultdialog.widget.ArrayWidget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProvider;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.AllColumnsProvider;
@@ -55,8 +56,7 @@ import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.AllC
 @SuppressWarnings("restriction")
 final class UnitConverterNodeSettings implements DefaultNodeSettings {
 	
-	@Widget(title = "Input Column", description = "The column containing values to convert")
-	@ChoicesProvider(AllColumnsProvider.class)
-	String m_inputColumnName = "";
-
+	@Widget(title = "Conversions", description = "The conversions to apply to the input")
+	@ArrayWidget(elementTitle = "Conversion")
+	Conversion[] m_conversions;
 }
