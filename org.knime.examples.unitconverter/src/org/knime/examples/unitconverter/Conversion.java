@@ -1,5 +1,7 @@
 package org.knime.examples.unitconverter;
 
+import static org.knime.core.webui.node.dialog.defaultdialog.util.column.ColumnSelectionUtil.getFirstDoubleColumn;
+
 import java.util.function.UnaryOperator;
 
 import org.knime.core.data.DataCell;
@@ -13,7 +15,8 @@ import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProvider;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.CompatibleColumnsProvider.DoubleColumnsProvider;
 
-public class Conversion implements DefaultNodeSettings {
+@SuppressWarnings("restriction")
+final class Conversion implements DefaultNodeSettings {
 
 	@Widget(title = "Input column", description = "Numeric column to convert")
 	@ChoicesProvider(DoubleColumnsProvider.class)
@@ -83,11 +86,19 @@ public class Conversion implements DefaultNodeSettings {
 			} else {
 				return new DoubleCell(outputValue);
 			}
-
 		}
 	}
 
 	@Widget(title = "Return as string with unit suffix", description = "If unchecked, result is numeric")
 	@ValueSwitchWidget
 	StringOrNumber m_stringOrNumber = StringOrNumber.NUMERIC;
+
+	Conversion() {
+		m_inputColumn = "";
+	}
+
+	Conversion(DefaultNodeSettingsContext context) {
+		context.getDataTableSpec(0)
+				.ifPresent(spec -> getFirstDoubleColumn(spec).ifPresent(column -> m_inputColumn = column.getName()));
+	}
 }

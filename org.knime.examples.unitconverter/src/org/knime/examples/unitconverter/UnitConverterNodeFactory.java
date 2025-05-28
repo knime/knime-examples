@@ -77,5 +77,4 @@ public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConvert
 	public UnitConverterNodeModel createNodeModel() {
 		return new UnitConverterNodeModel(CONFIGURATION);
 	}
-
 }

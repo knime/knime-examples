@@ -49,14 +49,20 @@ package org.knime.examples.unitconverter;
 import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.ArrayWidget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProvider;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.AllColumnsProvider;
 
-/** Settings for the “Unit Converter” node (Modern UI). */
+/** Settings for the "Unit Converter" node. */
 @SuppressWarnings("restriction")
 final class UnitConverterNodeSettings implements DefaultNodeSettings {
-	
+
 	@Widget(title = "Conversions", description = "The conversions to apply to the input")
 	@ArrayWidget(elementTitle = "Conversion")
 	Conversion[] m_conversions;
+
+	UnitConverterNodeSettings() {
+		m_conversions = new Conversion[0];
+	}
+
+	UnitConverterNodeSettings(DefaultNodeSettingsContext context) {
+		m_conversions = new Conversion[] { new Conversion(context) };
+	}
 }
