@@ -13,7 +13,7 @@
 		<revision>1.0.0</revision>
 		<changelist>-SNAPSHOT</changelist>
 		<knime.version>5.3</knime.version>
-		<tycho.version>3.0.3</tycho.version>
+		<tycho.version>4.0.7</tycho.version>
 		<tycho.extras.version>${tycho.version}</tycho.extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -21,6 +21,7 @@
 
 	<!-- List the modules of your project here -->
 	<modules>
+		<module>org.knime.examples.minimal</module>
 		<module>org.knime.examples.unitconverter</module>
 		<module>org.knime.examples.feature</module>
 		<module>org.knime.examples.update</module>

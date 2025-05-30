@@ -69,12 +69,12 @@ final class UnitConverterNodeModel extends WebUISimpleStreamableFunctionNodeMode
 	}
 
 	@Override
-	protected ColumnRearranger createColumnRearranger(DataTableSpec spec, UnitConverterNodeSettings modelSettings)
+	protected ColumnRearranger createColumnRearranger(DataTableSpec spec, UnitConverterNodeSettings settings)
 			throws InvalidSettingsException {
 		final var rearranger = new ColumnRearranger(spec);
 		final var uniqueNameGenerator = new UniqueNameGenerator(spec);
 
-		for (final Conversion conversion : modelSettings.m_conversions) {
+		for (final Conversion conversion : settings.m_conversions) {
 			final var inputColumnIndex = spec.findColumnIndex(conversion.m_inputColumn);
 			if (inputColumnIndex < 0) {
 				throw new InvalidSettingsException(

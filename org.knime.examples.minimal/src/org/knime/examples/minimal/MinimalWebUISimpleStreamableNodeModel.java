@@ -44,37 +44,32 @@
  * ---------------------------------------------------------------------
  *
  */
-package org.knime.examples.unitconverter;
+package org.knime.examples.minimal;
 
-import org.knime.core.node.BufferedDataTable;
+import org.knime.core.data.DataTableSpec;
+import org.knime.core.data.container.ColumnRearranger;
+import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.webui.node.impl.WebUINodeConfiguration;
-import org.knime.core.webui.node.impl.WebUINodeFactory;
+import org.knime.core.webui.node.impl.WebUISimpleStreamableFunctionNodeModel;
 
-/** Node Factory for the "Unit Converter" node. */
+/** Node Model for a minimal streamable node that can be used as a template for developing new nodes. */
 @SuppressWarnings("restriction")
-public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConverterNodeModel> {
+final class MinimalWebUISimpleStreamableNodeModel extends WebUISimpleStreamableFunctionNodeModel<MinimalNodeSettings> {
 
-	public static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
-			.name("Unit Converter") //
-			.icon("node-cog.png") //
-			.shortDescription("Convert units of measure") //
-			.fullDescription("""
-					Convert between common metric / imperial units.
-
-				    Extend the ParameterArray to support further conversions
-				    by simply adding new items in the dialog.
-				    """) //
-			.modelSettingsClass(UnitConverterNodeSettings.class) //
-			.addInputPort("Input table", BufferedDataTable.TYPE, "Table with column(s) to convert") //
-			.addOutputPort("Output table", BufferedDataTable.TYPE, "Table with converted columns") //
-			.build();
-	
-	public UnitConverterNodeFactory() {
-		super(CONFIGURATION);
+	MinimalWebUISimpleStreamableNodeModel(WebUINodeConfiguration configuration) {
+		super(configuration, MinimalNodeSettings.class);
 	}
 
 	@Override
-	public UnitConverterNodeModel createNodeModel() {
-		return new UnitConverterNodeModel(CONFIGURATION);
+	protected ColumnRearranger createColumnRearranger(DataTableSpec spec, MinimalNodeSettings settings)
+			throws InvalidSettingsException {
+		
+		if (!spec.containsName(settings.m_column)) {
+			throw new InvalidSettingsException(
+					"Input column '" + settings.m_column + "' not found in input table specification.");
+		}
+		final var rearranger = new ColumnRearranger(spec);
+
+		return rearranger;
 	}
 }

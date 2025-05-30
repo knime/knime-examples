@@ -44,37 +44,43 @@
  * ---------------------------------------------------------------------
  *
  */
-package org.knime.examples.unitconverter;
+package org.knime.examples.minimal;
 
+import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
+import org.knime.core.node.ExecutionContext;
+import org.knime.core.node.InvalidSettingsException;
+import org.knime.core.node.KNIMEException;
 import org.knime.core.webui.node.impl.WebUINodeConfiguration;
-import org.knime.core.webui.node.impl.WebUINodeFactory;
+import org.knime.core.webui.node.impl.WebUINodeModel;
 
-/** Node Factory for the "Unit Converter" node. */
+/**  Node Model for a minimal node that can be used as a template for developing new nodes. */
 @SuppressWarnings("restriction")
-public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConverterNodeModel> {
+final class MinimalWebUINodeModel extends WebUINodeModel<MinimalNodeSettings> {
 
-	public static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
-			.name("Unit Converter") //
-			.icon("node-cog.png") //
-			.shortDescription("Convert units of measure") //
-			.fullDescription("""
-					Convert between common metric / imperial units.
-
-				    Extend the ParameterArray to support further conversions
-				    by simply adding new items in the dialog.
-				    """) //
-			.modelSettingsClass(UnitConverterNodeSettings.class) //
-			.addInputPort("Input table", BufferedDataTable.TYPE, "Table with column(s) to convert") //
-			.addOutputPort("Output table", BufferedDataTable.TYPE, "Table with converted columns") //
-			.build();
-	
-	public UnitConverterNodeFactory() {
-		super(CONFIGURATION);
+	MinimalWebUINodeModel(WebUINodeConfiguration configuration) {
+		super(configuration, MinimalNodeSettings.class);
 	}
 
 	@Override
-	public UnitConverterNodeModel createNodeModel() {
-		return new UnitConverterNodeModel(CONFIGURATION);
+	protected DataTableSpec[] configure(DataTableSpec[] inSpecs, MinimalNodeSettings settings)
+			throws InvalidSettingsException {
+		
+		if (!inSpecs[0].containsName(settings.m_column)) {
+			throw new InvalidSettingsException(
+					"Input column '" + settings.m_column + "' not found in input table specification.");
+		}
+		return inSpecs;
+	}
+
+	@Override
+	protected BufferedDataTable[] execute(BufferedDataTable[] inData, ExecutionContext exec,
+			MinimalNodeSettings settings) throws Exception {
+		
+		if (!inData[0].getDataTableSpec().containsName(settings.m_column)) {
+			throw new KNIMEException(
+					"Input column '" + settings.m_column + "' not found in input table specification.");
+		}
+		return inData;
 	}
 }

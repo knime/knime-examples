@@ -44,37 +44,34 @@
  * ---------------------------------------------------------------------
  *
  */
-package org.knime.examples.unitconverter;
+package org.knime.examples.minimal;
 
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.webui.node.impl.WebUINodeConfiguration;
 import org.knime.core.webui.node.impl.WebUINodeFactory;
 
-/** Node Factory for the "Unit Converter" node. */
+/** Node Factory for a minimal node that can be used as a template for developing new nodes. */
 @SuppressWarnings("restriction")
-public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConverterNodeModel> {
+public final class MinimalWebUINodeFactory extends WebUINodeFactory<MinimalWebUINodeModel> {
 
 	public static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
-			.name("Unit Converter") //
+			.name("Minimal Web UI Node") //
 			.icon("node-cog.png") //
-			.shortDescription("Convert units of measure") //
+			.shortDescription("A minimal node with Web UI dialog") //
 			.fullDescription("""
-					Convert between common metric / imperial units.
-
-				    Extend the ParameterArray to support further conversions
-				    by simply adding new items in the dialog.
+					A minimal node with Web UI dialog.
 				    """) //
-			.modelSettingsClass(UnitConverterNodeSettings.class) //
-			.addInputPort("Input table", BufferedDataTable.TYPE, "Table with column(s) to convert") //
-			.addOutputPort("Output table", BufferedDataTable.TYPE, "Table with converted columns") //
+			.modelSettingsClass(MinimalNodeSettings.class) //
+			.addInputPort("Input table", BufferedDataTable.TYPE, "Input table") //
+			.addOutputPort("Output table", BufferedDataTable.TYPE, "Output table") //
 			.build();
 	
-	public UnitConverterNodeFactory() {
+	public MinimalWebUINodeFactory() {
 		super(CONFIGURATION);
 	}
 
 	@Override
-	public UnitConverterNodeModel createNodeModel() {
-		return new UnitConverterNodeModel(CONFIGURATION);
+	public MinimalWebUINodeModel createNodeModel() {
+		return new MinimalWebUINodeModel(CONFIGURATION);
 	}
 }

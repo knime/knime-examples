@@ -44,37 +44,29 @@
  * ---------------------------------------------------------------------
  *
  */
-package org.knime.examples.unitconverter;
+package org.knime.examples.minimal;
 
-import org.knime.core.node.BufferedDataTable;
-import org.knime.core.webui.node.impl.WebUINodeConfiguration;
-import org.knime.core.webui.node.impl.WebUINodeFactory;
+import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
+import org.knime.core.webui.node.dialog.defaultdialog.util.column.ColumnSelectionUtil;
+import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
+import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProvider;
+import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.AllColumnsProvider;
 
-/** Node Factory for the "Unit Converter" node. */
+/** Settings for a minimal node that can be used as a template for developing new nodes. See the Javadoc of
+ * {@link DefaultNodeSettings} for a full description of how to implement additional settings. */
 @SuppressWarnings("restriction")
-public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConverterNodeModel> {
+final class MinimalNodeSettings implements DefaultNodeSettings {
 
-	public static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
-			.name("Unit Converter") //
-			.icon("node-cog.png") //
-			.shortDescription("Convert units of measure") //
-			.fullDescription("""
-					Convert between common metric / imperial units.
+	// some column selection setting that is here only for these settings not to look to empty
+	@Widget(title = "Input column", description = "A column of the input table")
+	@ChoicesProvider(AllColumnsProvider.class)
+	String m_column = "";
 
-				    Extend the ParameterArray to support further conversions
-				    by simply adding new items in the dialog.
-				    """) //
-			.modelSettingsClass(UnitConverterNodeSettings.class) //
-			.addInputPort("Input table", BufferedDataTable.TYPE, "Table with column(s) to convert") //
-			.addOutputPort("Output table", BufferedDataTable.TYPE, "Table with converted columns") //
-			.build();
-	
-	public UnitConverterNodeFactory() {
-		super(CONFIGURATION);
+	MinimalNodeSettings() {
 	}
 
-	@Override
-	public UnitConverterNodeModel createNodeModel() {
-		return new UnitConverterNodeModel(CONFIGURATION);
+	// Optional constructor that can be removed if context is not needed for initialization
+	MinimalNodeSettings(DefaultNodeSettingsContext context) {
+		ColumnSelectionUtil.getFirstColumnOfFirstPort(context).ifPresent(colSpec -> m_column = colSpec.getName());
 	}
 }
