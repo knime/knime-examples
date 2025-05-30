@@ -1,0 +1,24 @@
+[workspace]
+authors = ["Bobby Test <bobby.test@knime.com>"]
+channels = ["knime", "knime/label/nightly", "conda-forge"]
+name = "unitconverter-extension"
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.11.*"                     # Base dependency
+knime-extension = "*"                 # Base dependency
+knime-python-base = "*"               # Base dependency
+scipy = "*"                           # Example dependency added by the user for the extension
+
+[feature.build.dependencies]
+python = "3.9.*"                      # Debendency needed for the bundling process
+knime-extension-bundling = "5.5.*"    # Dependency needed for the bundling process
+
+[feature.build.tasks]
+build = { args = [{ "arg" = "dest", "default" = "./local-update-site" }], cmd = "python ./.pixi/envs/build/bin/build_python_extension.py . {{ dest }}"}
+
+[environments]
+build = {features = ["build"], no-default-feature = true}   # Environment used for bundling the extension
