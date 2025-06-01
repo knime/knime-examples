@@ -55,7 +55,7 @@ import org.knime.core.webui.node.impl.WebUINodeFactory;
 public final class MinimalWebUISimpleStreamableNodeFactory
 		extends WebUINodeFactory<MinimalWebUISimpleStreamableNodeModel> {
 
-	public static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
+	private static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
 			.name("Minimal Streamable Web UI Node") //
 			.icon("node-cog.png") //
 			.shortDescription("A minimal streamable node with Web UI dialog") //
@@ -66,7 +66,10 @@ public final class MinimalWebUISimpleStreamableNodeFactory
 			.addInputPort("Input table", BufferedDataTable.TYPE, "Input table") //
 			.addOutputPort("Output table", BufferedDataTable.TYPE, "Output table") //
 			.build();
-	
+
+	/**
+	 * Default constructor for the node factory.
+	 */
 	public MinimalWebUISimpleStreamableNodeFactory() {
 		super(CONFIGURATION);
 	}

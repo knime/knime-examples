@@ -74,7 +74,7 @@ final class UnitConverterNodeModel extends WebUISimpleStreamableFunctionNodeMode
 		final var rearranger = new ColumnRearranger(spec);
 		final var uniqueNameGenerator = new UniqueNameGenerator(spec);
 
-		for (final Conversion conversion : settings.m_conversions) {
+		for (final ConversionSettings conversion : settings.m_conversions) {
 			final var inputColumnIndex = spec.findColumnIndex(conversion.m_inputColumn);
 			if (inputColumnIndex < 0) {
 				throw new InvalidSettingsException(
@@ -99,9 +99,9 @@ final class UnitConverterNodeModel extends WebUISimpleStreamableFunctionNodeMode
 	static final class UnitConverterCellFactory extends SingleCellFactory {
 
 		private final int m_columnIndex;
-		private final Conversion m_conversion;
+		private final ConversionSettings m_conversion;
 
-		UnitConverterCellFactory(final String columnName, final int columnIndex, final Conversion conversion) {
+		UnitConverterCellFactory(final String columnName, final int columnIndex, final ConversionSettings conversion) {
 			super(new DataColumnSpecCreator(columnName, conversion.m_stringOrNumber.getDataType()).createSpec());
 			m_conversion = conversion;
 			m_columnIndex = columnIndex;

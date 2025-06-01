@@ -16,7 +16,7 @@ import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProv
 import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.CompatibleColumnsProvider.DoubleColumnsProvider;
 
 @SuppressWarnings("restriction")
-final class Conversion implements DefaultNodeSettings {
+final class ConversionSettings implements DefaultNodeSettings {
 
 	@Widget(title = "Input column", description = "Numeric column to convert")
 	@ChoicesProvider(DoubleColumnsProvider.class)
@@ -93,11 +93,11 @@ final class Conversion implements DefaultNodeSettings {
 	@ValueSwitchWidget
 	StringOrNumber m_stringOrNumber = StringOrNumber.NUMERIC;
 
-	Conversion() {
+	ConversionSettings() {
 		m_inputColumn = "";
 	}
 
-	Conversion(DefaultNodeSettingsContext context) {
+	ConversionSettings(DefaultNodeSettingsContext context) {
 		context.getDataTableSpec(0)
 				.ifPresent(spec -> getFirstDoubleColumn(spec).ifPresent(column -> m_inputColumn = column.getName()));
 	}

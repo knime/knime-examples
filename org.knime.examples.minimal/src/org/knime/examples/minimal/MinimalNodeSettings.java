@@ -57,7 +57,7 @@ import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.AllC
 @SuppressWarnings("restriction")
 final class MinimalNodeSettings implements DefaultNodeSettings {
 
-	// some column selection setting that is here only for these settings not to look to empty
+	// some column selection setting that is here only for these settings not to look too empty
 	@Widget(title = "Input column", description = "A column of the input table")
 	@ChoicesProvider(AllColumnsProvider.class)
 	String m_column = "";
@@ -65,7 +65,7 @@ final class MinimalNodeSettings implements DefaultNodeSettings {
 	MinimalNodeSettings() {
 	}
 
-	// Optional constructor that can be removed if context is not needed for initialization
+	// optional constructor that can be removed if context is not needed for initialization
 	MinimalNodeSettings(DefaultNodeSettingsContext context) {
 		ColumnSelectionUtil.getFirstColumnOfFirstPort(context).ifPresent(colSpec -> m_column = colSpec.getName());
 	}

@@ -56,13 +56,13 @@ final class UnitConverterNodeSettings implements DefaultNodeSettings {
 
 	@Widget(title = "Conversions", description = "The conversions to apply to the input")
 	@ArrayWidget(elementTitle = "Conversion")
-	Conversion[] m_conversions;
+	ConversionSettings[] m_conversions;
 
 	UnitConverterNodeSettings() {
-		m_conversions = new Conversion[0];
+		m_conversions = new ConversionSettings[0];
 	}
 
 	UnitConverterNodeSettings(DefaultNodeSettingsContext context) {
-		m_conversions = new Conversion[] { new Conversion(context) };
+		m_conversions = new ConversionSettings[] { new ConversionSettings(context) };
 	}
 }

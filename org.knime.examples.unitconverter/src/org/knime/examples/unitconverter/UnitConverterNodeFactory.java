@@ -54,7 +54,7 @@ import org.knime.core.webui.node.impl.WebUINodeFactory;
 @SuppressWarnings("restriction")
 public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConverterNodeModel> {
 
-	public static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
+	private static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
 			.name("Unit Converter") //
 			.icon("node-cog.png") //
 			.shortDescription("Convert units of measure") //
@@ -68,7 +68,10 @@ public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConvert
 			.addInputPort("Input table", BufferedDataTable.TYPE, "Table with column(s) to convert") //
 			.addOutputPort("Output table", BufferedDataTable.TYPE, "Table with converted columns") //
 			.build();
-	
+
+	/**
+     * Default constructor for the node factory.
+     */
 	public UnitConverterNodeFactory() {
 		super(CONFIGURATION);
 	}
