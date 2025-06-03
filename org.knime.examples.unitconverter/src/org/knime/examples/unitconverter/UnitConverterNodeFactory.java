@@ -67,6 +67,7 @@ public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConvert
 			.modelSettingsClass(UnitConverterNodeSettings.class) //
 			.addInputPort("Input table", BufferedDataTable.TYPE, "Table with column(s) to convert") //
 			.addOutputPort("Output table", BufferedDataTable.TYPE, "Table with converted columns") //
+			// TODO add keywords "metric" and "imperial" to the node to make it easier to find
 			.build();
 
 	/**

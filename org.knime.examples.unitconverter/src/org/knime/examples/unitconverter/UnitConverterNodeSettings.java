@@ -47,22 +47,21 @@
 package org.knime.examples.unitconverter;
 
 import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.ArrayWidget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
 
 /** Settings for the "Unit Converter" node. */
 @SuppressWarnings("restriction")
 final class UnitConverterNodeSettings implements DefaultNodeSettings {
 
-	@Widget(title = "Conversions", description = "The conversions to apply to the input")
-	@ArrayWidget(elementTitle = "Conversion")
-	ConversionSettings[] m_conversions;
+	@Widget(title = "Conversion", description = "The conversion to apply to the input")
+	// TODO change to an array to allow for multiple conversions
+	ConversionSettings m_conversions;
 
 	UnitConverterNodeSettings() {
-		m_conversions = new ConversionSettings[0];
+		m_conversions = new ConversionSettings();
 	}
 
-	UnitConverterNodeSettings(DefaultNodeSettingsContext context) {
-		m_conversions = new ConversionSettings[] { new ConversionSettings(context) };
+	UnitConverterNodeSettings(final DefaultNodeSettingsContext context) {
+		m_conversions = new ConversionSettings(context);
 	}
 }

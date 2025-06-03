@@ -12,14 +12,12 @@ import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.Label;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.ValueSwitchWidget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProvider;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.CompatibleColumnsProvider.DoubleColumnsProvider;
 
 @SuppressWarnings("restriction")
 final class ConversionSettings implements DefaultNodeSettings {
 
 	@Widget(title = "Input column", description = "Numeric column to convert")
-	@ChoicesProvider(DoubleColumnsProvider.class)
+	// TODO add a ChoicesProvider to select a numeric column
 	String m_inputColumn;
 
 	enum Type {
@@ -33,18 +31,14 @@ final class ConversionSettings implements DefaultNodeSettings {
 		KM_TO_MI(value -> value / 1.60934, "mi"),
 
 		@Label(value = "mi → km (* 1.60934)", description = "Miles to kilometres")
-		MI_TO_KM(value -> value * 1.60934, "km"),
+		MI_TO_KM(value -> value * 1.60934, "km");
 
-		@Label(value = "L → gal (/ 3.78541)", description = "Litres to US gallons")
-		L_TO_GAL(value -> value / 3.78541, "gal"),
-
-		@Label(value = "gal → L (* 3.78541)", description = "US gallons to litres")
-		GAL_TO_L(value -> value * 3.78541, "L");
+		// TODO add a conversion for liters to gallons and vice versa; 1 gallon equals 3.78541 litres
 
 		private final UnaryOperator<Double> m_conversionFunction;
 		private final String m_outputUnit;
 
-		Type(UnaryOperator<Double> conversionFunction, String outputUnit) {
+		Type(final UnaryOperator<Double> conversionFunction, final String outputUnit) {
 			this.m_conversionFunction = conversionFunction;
 			this.m_outputUnit = outputUnit;
 		}
@@ -53,7 +47,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 			return m_outputUnit;
 		}
 
-		double convert(double value) {
+		double convert(final double value) {
 			return m_conversionFunction.apply(value);
 		}
 	}
@@ -72,7 +66,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 
 		private final DataType m_dataType;
 
-		StringOrNumber(DataType dataType) {
+		StringOrNumber(final DataType dataType) {
 			this.m_dataType = dataType;
 		}
 
@@ -80,7 +74,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 			return m_dataType;
 		}
 
-		DataCell createCell(double outputValue, String outputUnit) {
+		DataCell createCell(final double outputValue, final String outputUnit) {
 			if (this == STRING) {
 				return new StringCell(outputValue + " " + outputUnit);
 			} else {
@@ -97,7 +91,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 		m_inputColumn = "";
 	}
 
-	ConversionSettings(DefaultNodeSettingsContext context) {
+	ConversionSettings(final DefaultNodeSettingsContext context) {
 		context.getDataTableSpec(0)
 				.ifPresent(spec -> getFirstDoubleColumn(spec).ifPresent(column -> m_inputColumn = column.getName()));
 	}
