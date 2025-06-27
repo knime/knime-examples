@@ -62,7 +62,7 @@ final class UnitConverterNodeSettings implements DefaultNodeSettings {
 		m_conversions = new ConversionSettings[0];
 	}
 
-	UnitConverterNodeSettings(DefaultNodeSettingsContext context) {
+	UnitConverterNodeSettings(final DefaultNodeSettingsContext context) {
 		m_conversions = new ConversionSettings[] { new ConversionSettings(context) };
 	}
 }
