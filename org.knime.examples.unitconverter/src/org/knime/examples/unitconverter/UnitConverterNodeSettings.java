@@ -51,7 +51,6 @@ import org.knime.core.webui.node.dialog.defaultdialog.widget.ArrayWidget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
 
 /** Settings for the "Unit Converter" node. */
-@SuppressWarnings("restriction")
 final class UnitConverterNodeSettings implements DefaultNodeSettings {
 
 	@Widget(title = "Conversions", description = "The conversions to apply to the input")
@@ -62,7 +61,7 @@ final class UnitConverterNodeSettings implements DefaultNodeSettings {
 		m_conversions = new ConversionSettings[0];
 	}
 
-	UnitConverterNodeSettings(DefaultNodeSettingsContext context) {
+	UnitConverterNodeSettings(final DefaultNodeSettingsContext context) {
 		m_conversions = new ConversionSettings[] { new ConversionSettings(context) };
 	}
 }

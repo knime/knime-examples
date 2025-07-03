@@ -10,7 +10,6 @@ import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.PredicatePr
 import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.Reference;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.ValueReference;
 
-@SuppressWarnings("restriction")
 final class OutputColumnSettings implements DefaultNodeSettings {
 
 	enum ReplaceOrAppend {

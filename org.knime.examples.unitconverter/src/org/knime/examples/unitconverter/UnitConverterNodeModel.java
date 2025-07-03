@@ -51,71 +51,67 @@ import static org.knime.examples.unitconverter.OutputColumnSettings.ReplaceOrApp
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataRow;
-import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.DoubleValue;
 import org.knime.core.data.container.ColumnRearranger;
 import org.knime.core.data.container.SingleCellFactory;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.util.UniqueNameGenerator;
-import org.knime.core.webui.node.impl.WebUINodeConfiguration;
-import org.knime.core.webui.node.impl.WebUISimpleStreamableFunctionNodeModel;
+import org.knime.node.DefaultModel.RearrangeColumnsInput;
+import org.knime.node.DefaultModel.RearrangeColumnsOutput;
 
 /** Model for the "Unit Converter" node. */
-@SuppressWarnings("restriction")
-final class UnitConverterNodeModel extends WebUISimpleStreamableFunctionNodeModel<UnitConverterNodeSettings> {
+final class UnitConverterNodeModel {
 
-	UnitConverterNodeModel(WebUINodeConfiguration configuration) {
-		super(configuration, UnitConverterNodeSettings.class);
-	}
+    static void rearrangeColumns(final RearrangeColumnsInput in, final RearrangeColumnsOutput out)
+        throws InvalidSettingsException {
+        final var spec = in.getDataTableSpec();
+        final var settings = in.<UnitConverterNodeSettings> getSettings();
+        final var rearranger = new ColumnRearranger(spec);
+        final var uniqueNameGenerator = new UniqueNameGenerator(spec);
 
-	@Override
-	protected ColumnRearranger createColumnRearranger(DataTableSpec spec, UnitConverterNodeSettings settings)
-			throws InvalidSettingsException {
-		final var rearranger = new ColumnRearranger(spec);
-		final var uniqueNameGenerator = new UniqueNameGenerator(spec);
+        for (final ConversionSettings conversion : settings.m_conversions) {
+            final var inputColumnIndex = spec.findColumnIndex(conversion.m_inputColumn);
+            if (inputColumnIndex < 0) {
+                throw new InvalidSettingsException(
+                    "Input column '" + conversion.m_inputColumn + "' not found in input table specification.");
+            }
+            final var inputColumnName = spec.getColumnSpec(inputColumnIndex).getName();
+            final var outputColumnSettings = conversion.m_outputColumnSettings;
 
-		for (final ConversionSettings conversion : settings.m_conversions) {
-			final var inputColumnIndex = spec.findColumnIndex(conversion.m_inputColumn);
-			if (inputColumnIndex < 0) {
-				throw new InvalidSettingsException(
-						"Input column '" + conversion.m_inputColumn + "' not found in input table specification.");
-			}
-			final var inputColumnName = spec.getColumnSpec(inputColumnIndex).getName();
-			final var outputColumnSettings = conversion.m_outputColumnSettings;
+            if (outputColumnSettings.m_replaceOrAppend == REPLACE) {
+                rearranger.replace(new UnitConverterCellFactory(inputColumnName, inputColumnIndex, conversion),
+                    inputColumnName);
+            } else {
+                rearranger.append(new UnitConverterCellFactory(
+                    uniqueNameGenerator.newName(inputColumnName + outputColumnSettings.m_suffix), inputColumnIndex,
+                    conversion));
+            }
+        }
 
-			if (outputColumnSettings.m_replaceOrAppend == REPLACE) {
-				rearranger.replace(new UnitConverterCellFactory(inputColumnName, inputColumnIndex, conversion),
-						inputColumnName);
-			} else {
-				rearranger.append(new UnitConverterCellFactory(
-						uniqueNameGenerator.newName(inputColumnName + outputColumnSettings.m_suffix), inputColumnIndex,
-						conversion));
-			}
-		}
+        out.setColumnRearranger(rearranger);
+    }
 
-		return rearranger;
-	}
+    static final class UnitConverterCellFactory extends SingleCellFactory {
 
-	static final class UnitConverterCellFactory extends SingleCellFactory {
+        private final int m_columnIndex;
 
-		private final int m_columnIndex;
-		private final ConversionSettings m_conversion;
+        private final ConversionSettings m_conversion;
 
-		UnitConverterCellFactory(final String columnName, final int columnIndex, final ConversionSettings conversion) {
-			super(new DataColumnSpecCreator(columnName, conversion.m_stringOrNumber.getDataType()).createSpec());
-			m_conversion = conversion;
-			m_columnIndex = columnIndex;
-		}
+        UnitConverterCellFactory(final String columnName, final int columnIndex, final ConversionSettings conversion) {
+            super(new DataColumnSpecCreator(columnName, conversion.m_stringOrNumber.getDataType()).createSpec());
+            m_conversion = conversion;
+            m_columnIndex = columnIndex;
+        }
 
-		@Override
-		public DataCell getCell(DataRow row) {
-			final var inputCell = row.getCell(m_columnIndex);
-			if (inputCell.isMissing()) {
-				return inputCell;
-			}
-			final var inputValue = ((DoubleValue) row.getCell(m_columnIndex)).getDoubleValue();
-			final var outputValue = m_conversion.m_type.convert(inputValue);
-			return m_conversion.m_stringOrNumber.createCell(outputValue, m_conversion.m_type.getOutputUnit());
-		}
-	}
+        @Override
+        public DataCell getCell(final DataRow row) {
+            final var inputCell = row.getCell(m_columnIndex);
+            if (inputCell.isMissing()) {
+                return inputCell;
+            }
+            final var inputValue = ((DoubleValue)row.getCell(m_columnIndex)).getDoubleValue();
+            final var outputValue = m_conversion.m_type.convert(inputValue);
+            return m_conversion.m_stringOrNumber.createCell(outputValue, m_conversion.m_type.getOutputUnit());
+        }
+    }
 }

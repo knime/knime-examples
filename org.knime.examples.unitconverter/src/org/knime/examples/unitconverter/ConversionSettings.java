@@ -15,7 +15,6 @@ import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProvider;
 import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.CompatibleColumnsProvider.DoubleColumnsProvider;
 
-@SuppressWarnings("restriction")
 final class ConversionSettings implements DefaultNodeSettings {
 
 	@Widget(title = "Input column", description = "Numeric column to convert")
@@ -44,7 +43,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 		private final UnaryOperator<Double> m_conversionFunction;
 		private final String m_outputUnit;
 
-		Type(UnaryOperator<Double> conversionFunction, String outputUnit) {
+		Type(final UnaryOperator<Double> conversionFunction, final String outputUnit) {
 			this.m_conversionFunction = conversionFunction;
 			this.m_outputUnit = outputUnit;
 		}
@@ -53,7 +52,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 			return m_outputUnit;
 		}
 
-		double convert(double value) {
+		double convert(final double value) {
 			return m_conversionFunction.apply(value);
 		}
 	}
@@ -72,7 +71,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 
 		private final DataType m_dataType;
 
-		StringOrNumber(DataType dataType) {
+		StringOrNumber(final DataType dataType) {
 			this.m_dataType = dataType;
 		}
 
@@ -80,7 +79,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 			return m_dataType;
 		}
 
-		DataCell createCell(double outputValue, String outputUnit) {
+		DataCell createCell(final double outputValue, final String outputUnit) {
 			if (this == STRING) {
 				return new StringCell(outputValue + " " + outputUnit);
 			} else {
@@ -97,7 +96,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 		m_inputColumn = "";
 	}
 
-	ConversionSettings(DefaultNodeSettingsContext context) {
+	ConversionSettings(final DefaultNodeSettingsContext context) {
 		context.getDataTableSpec(0)
 				.ifPresent(spec -> getFirstDoubleColumn(spec).ifPresent(column -> m_inputColumn = column.getName()));
 	}

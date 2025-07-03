@@ -46,38 +46,33 @@
  */
 package org.knime.examples.unitconverter;
 
-import org.knime.core.node.BufferedDataTable;
-import org.knime.core.webui.node.impl.WebUINodeConfiguration;
-import org.knime.core.webui.node.impl.WebUINodeFactory;
+import org.knime.node.DefaultNode;
+import org.knime.node.DefaultNodeFactory;
 
 /** Node Factory for the "Unit Converter" node. */
-@SuppressWarnings("restriction")
-public final class UnitConverterNodeFactory extends WebUINodeFactory<UnitConverterNodeModel> {
+public final class UnitConverterNodeFactory extends DefaultNodeFactory {
 
-	private static final WebUINodeConfiguration CONFIGURATION = WebUINodeConfiguration.builder() //
-			.name("Unit Converter") //
-			.icon("node-cog.png") //
-			.shortDescription("Convert units of measure") //
-			.fullDescription("""
-					Convert between common metric / imperial units.
+    private static final DefaultNode NODE = DefaultNode.create() //
+        .name("Unit Converter") //
+        .icon("node-cog.png") //
+        .shortDescription("Convert units of measure") //
+        .fullDescription("""
+                Convert between common metric / imperial units.
 
-				    Extend the ParameterArray to support further conversions
-				    by simply adding new items in the dialog.
-				    """) //
-			.modelSettingsClass(UnitConverterNodeSettings.class) //
-			.addInputPort("Input table", BufferedDataTable.TYPE, "Table with column(s) to convert") //
-			.addOutputPort("Output table", BufferedDataTable.TYPE, "Table with converted columns") //
-			.build();
+                   Extend the ParameterArray to support further conversions
+                   by simply adding new items in the dialog.
+                   """) //
+        .ports(p -> p//
+            .addInputTable("Input table", "Table with column(s) to convert") //
+            .addOutputTable("Output table", "Table with converted columns") //
+        ).model(m -> m //
+            .settingsClass(UnitConverterNodeSettings.class)//
+            .rearrangeColumns(UnitConverterNodeModel::rearrangeColumns));
 
-	/**
+    /**
      * Default constructor for the node factory.
      */
-	public UnitConverterNodeFactory() {
-		super(CONFIGURATION);
-	}
-
-	@Override
-	public UnitConverterNodeModel createNodeModel() {
-		return new UnitConverterNodeModel(CONFIGURATION);
-	}
+    public UnitConverterNodeFactory() {
+        super(NODE);
+    }
 }
