@@ -23,6 +23,7 @@
 	<modules>
 		<module>org.knime.examples.minimal</module>
 		<module>org.knime.examples.unitconverter</module>
+		<module>org.knime.examples.dataview</module>
 		<module>org.knime.examples.feature</module>
 		<module>org.knime.examples.update</module>
 	</modules>
