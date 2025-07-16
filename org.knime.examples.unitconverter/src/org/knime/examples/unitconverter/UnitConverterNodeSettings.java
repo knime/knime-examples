@@ -47,8 +47,8 @@
 package org.knime.examples.unitconverter;
 
 import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.ArrayWidget;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
+import org.knime.node.parameters.Widget;
+import org.knime.node.parameters.array.ArrayWidget;
 
 /** Settings for the "Unit Converter" node. */
 final class UnitConverterNodeSettings implements DefaultNodeSettings {
