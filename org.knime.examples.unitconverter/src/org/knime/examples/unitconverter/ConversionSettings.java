@@ -1,6 +1,6 @@
 package org.knime.examples.unitconverter;
 
-import static org.knime.core.webui.node.dialog.defaultdialog.util.column.ColumnSelectionUtil.getFirstDoubleColumn;
+import static org.knime.node.parameters.widget.choices.util.ColumnSelectionUtil.getFirstDoubleColumn;
 
 import java.util.function.UnaryOperator;
 
@@ -9,6 +9,7 @@ import org.knime.core.data.DataType;
 import org.knime.core.data.def.DoubleCell;
 import org.knime.core.data.def.StringCell;
 import org.knime.node.parameters.NodeParameters;
+import org.knime.node.parameters.NodeParametersInput;
 import org.knime.node.parameters.Widget;
 import org.knime.node.parameters.widget.choices.ChoicesProvider;
 import org.knime.node.parameters.widget.choices.Label;

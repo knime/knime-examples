@@ -46,12 +46,12 @@
  */
 package org.knime.examples.minimal;
 
-import org.knime.core.webui.node.dialog.defaultdialog.util.column.ColumnSelectionUtil;
 import org.knime.node.parameters.NodeParameters;
 import org.knime.node.parameters.NodeParametersInput;
 import org.knime.node.parameters.Widget;
 import org.knime.node.parameters.widget.choices.ChoicesProvider;
 import org.knime.node.parameters.widget.choices.util.AllColumnsProvider;
+import org.knime.node.parameters.widget.choices.util.ColumnSelectionUtil;
 
 /** Settings for a minimal node that can be used as a template for developing new nodes. See the Javadoc of
  * {@link NodeParameters} for a full description of how to implement additional settings. */

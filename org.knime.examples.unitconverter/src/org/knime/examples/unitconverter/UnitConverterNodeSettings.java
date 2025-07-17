@@ -47,6 +47,7 @@
 package org.knime.examples.unitconverter;
 
 import org.knime.node.parameters.NodeParameters;
+import org.knime.node.parameters.NodeParametersInput;
 import org.knime.node.parameters.Widget;
 import org.knime.node.parameters.array.ArrayWidget;
 
