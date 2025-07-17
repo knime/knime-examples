@@ -8,14 +8,14 @@ import org.knime.core.data.DataCell;
 import org.knime.core.data.DataType;
 import org.knime.core.data.def.DoubleCell;
 import org.knime.core.data.def.StringCell;
-import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
+import org.knime.node.parameters.NodeParameters;
 import org.knime.node.parameters.Widget;
 import org.knime.node.parameters.widget.choices.ChoicesProvider;
 import org.knime.node.parameters.widget.choices.Label;
 import org.knime.node.parameters.widget.choices.ValueSwitchWidget;
 import org.knime.node.parameters.widget.choices.util.CompatibleColumnsProvider.DoubleColumnsProvider;
 
-final class ConversionSettings implements DefaultNodeSettings {
+final class ConversionSettings implements NodeParameters {
 
 	@Widget(title = "Input column", description = "Numeric column to convert")
 	@ChoicesProvider(DoubleColumnsProvider.class)
@@ -96,7 +96,7 @@ final class ConversionSettings implements DefaultNodeSettings {
 		m_inputColumn = "";
 	}
 
-	ConversionSettings(final DefaultNodeSettingsContext context) {
+	ConversionSettings(final NodeParametersInput context) {
 		context.getDataTableSpec(0)
 				.ifPresent(spec -> getFirstDoubleColumn(spec).ifPresent(column -> m_inputColumn = column.getName()));
 	}
