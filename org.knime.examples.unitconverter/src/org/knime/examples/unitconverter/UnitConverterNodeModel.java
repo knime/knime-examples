@@ -65,7 +65,7 @@ final class UnitConverterNodeModel {
     static void rearrangeColumns(final RearrangeColumnsInput in, final RearrangeColumnsOutput out)
         throws InvalidSettingsException {
         final var spec = in.getDataTableSpec();
-        final var settings = in.<UnitConverterNodeSettings> getSettings();
+        final var settings = in.<UnitConverterNodeSettings> getParameters();
         final var rearranger = new ColumnRearranger(spec);
         final var uniqueNameGenerator = new UniqueNameGenerator(spec);
 

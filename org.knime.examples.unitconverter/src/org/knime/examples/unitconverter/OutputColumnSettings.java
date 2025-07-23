@@ -1,16 +1,16 @@
 package org.knime.examples.unitconverter;
 
-import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.Label;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.Effect;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.Effect.EffectType;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.Predicate;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.PredicateProvider;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.Reference;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.updates.ValueReference;
+import org.knime.node.parameters.NodeParameters;
+import org.knime.node.parameters.Widget;
+import org.knime.node.parameters.updates.Effect;
+import org.knime.node.parameters.updates.EffectPredicate;
+import org.knime.node.parameters.updates.EffectPredicateProvider;
+import org.knime.node.parameters.updates.ParameterReference;
+import org.knime.node.parameters.updates.ValueReference;
+import org.knime.node.parameters.updates.Effect.EffectType;
+import org.knime.node.parameters.widget.choices.Label;
 
-final class OutputColumnSettings implements DefaultNodeSettings {
+final class OutputColumnSettings implements NodeParameters {
 
 	enum ReplaceOrAppend {
 		@Label(value = "Replace", description = "Replaces the selected columns by the new columns.")
@@ -22,12 +22,12 @@ final class OutputColumnSettings implements DefaultNodeSettings {
 				""")
 		APPEND;
 
-		interface ReplaceOrAppendRef extends Reference<ReplaceOrAppend> {
+		interface ReplaceOrAppendRef extends ParameterReference<ReplaceOrAppend> {
 		}
 
-		static final class IsAppend implements PredicateProvider {
+		static final class IsAppend implements EffectPredicateProvider {
 			@Override
-			public Predicate init(final PredicateInitializer i) {
+			public EffectPredicate init(final PredicateInitializer i) {
 				return i.getEnum(ReplaceOrAppendRef.class).isOneOf(ReplaceOrAppend.APPEND);
 			}
 		}

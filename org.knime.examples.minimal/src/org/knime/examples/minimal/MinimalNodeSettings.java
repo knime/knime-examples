@@ -46,16 +46,17 @@
  */
 package org.knime.examples.minimal;
 
-import org.knime.core.webui.node.dialog.defaultdialog.DefaultNodeSettings;
-import org.knime.core.webui.node.dialog.defaultdialog.util.column.ColumnSelectionUtil;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.Widget;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.ChoicesProvider;
-import org.knime.core.webui.node.dialog.defaultdialog.widget.choices.column.AllColumnsProvider;
+import org.knime.node.parameters.NodeParameters;
+import org.knime.node.parameters.NodeParametersInput;
+import org.knime.node.parameters.Widget;
+import org.knime.node.parameters.widget.choices.ChoicesProvider;
+import org.knime.node.parameters.widget.choices.util.AllColumnsProvider;
+import org.knime.node.parameters.widget.choices.util.ColumnSelectionUtil;
 
 /** Settings for a minimal node that can be used as a template for developing new nodes. See the Javadoc of
- * {@link DefaultNodeSettings} for a full description of how to implement additional settings. */
+ * {@link NodeParameters} for a full description of how to implement additional settings. */
 @SuppressWarnings("restriction")
-final class MinimalNodeSettings implements DefaultNodeSettings {
+final class MinimalNodeSettings implements NodeParameters {
 
 	// some column selection setting that is here only for these settings not to look too empty
 	@Widget(title = "Input column", description = "A column of the input table")
@@ -66,7 +67,7 @@ final class MinimalNodeSettings implements DefaultNodeSettings {
 	}
 
 	// optional constructor that can be removed if context is not needed for initialization
-	MinimalNodeSettings(DefaultNodeSettingsContext context) {
+	MinimalNodeSettings(final NodeParametersInput context) {
 		ColumnSelectionUtil.getFirstColumnOfFirstPort(context).ifPresent(colSpec -> m_column = colSpec.getName());
 	}
 }

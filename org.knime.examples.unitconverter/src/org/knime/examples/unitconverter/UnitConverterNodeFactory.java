@@ -66,7 +66,7 @@ public final class UnitConverterNodeFactory extends DefaultNodeFactory {
             .addInputTable("Input table", "Table with column(s) to convert") //
             .addOutputTable("Output table", "Table with converted columns") //
         ).model(m -> m //
-            .settingsClass(UnitConverterNodeSettings.class)//
+            .parametersClass(UnitConverterNodeSettings.class)//
             .rearrangeColumns(UnitConverterNodeModel::rearrangeColumns));
 
     /**
