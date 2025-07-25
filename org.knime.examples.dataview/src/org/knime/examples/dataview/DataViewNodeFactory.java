@@ -81,14 +81,14 @@ public class DataViewNodeFactory extends DefaultNodeFactory {
         .ports(p -> p//
             .addInputTable("Input table", "Table with column(s) to display") //
         ).model(m -> m//
-            .withoutSettings()//
+            .withoutParameters()//
             .configure((coIn, coOu) -> {
             })//
             .execute((exIn, exOu) -> {
-                exOu.setInternalData(exIn.getInData());
+                exOu.setInternalData(exIn.getInTable(0));
             })//
         ).addView(v -> v//
-            .settingsClass(DataViewViewSettings.class)//
+            .parametersClass(DataViewViewSettings.class)//
             .description("The view node description")//
             .page(p -> p//
                 .fromFile()//
@@ -101,7 +101,7 @@ public class DataViewNodeFactory extends DefaultNodeFactory {
             .initialData(rid -> rid//
                 .data(vi -> {
                     final var table = vi.getInternalTables()[0];
-                    final var settings = (DataViewViewSettings)vi.getSettings();
+                    final var settings = (DataViewViewSettings)vi.getParameters();
                     return extractTableContent(table, settings.m_numRows);
                 })//
             )//
